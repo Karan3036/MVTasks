@@ -1,0 +1,33 @@
+<apex:page controller="accrelcontandoppoclass">
+    <apex:form >
+        <apex:pageBlock title="AccountTable">
+            <apex:pageBlockTable value="{!Acclst}" var="A">
+                <apex:column headerValue="NAME OF THE ACCOUNT" > 
+                    <apex:commandLink value="{!A.Name}" action="{!showDetails}" rerender="conttable,opptable">
+                        <apex:param value="{!A.Id}" name="idForConts" assignTo="{!recid}"/>
+                    </apex:commandLink>
+                </apex:column>  
+                <apex:column value="{!A.Phone}"/>
+                <apex:column value="{!A.BillingStreet}"/>
+                <apex:column value="{!A.BillingCity}"/>
+                <apex:column value="{!A.BillingState}"/>
+                <apex:column value="{!A.BillingPostalCode}"/>
+                <apex:column value="{!A.BillingCountry}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:pageBlock title="Contacts">
+        <apex:pageBlockTable value="{!contacts}" var="con" id="conttable">
+            <apex:column value="{!con.FirstName}"/>
+            <apex:column value="{!con.LastName}"/>
+            <apex:column value="{!con.Email}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:pageBlock title="Opportunities">
+        <apex:pageBlockTable value="{!opportunities}" var="opp" id="opptable">
+            <apex:column value="{!opp.Name}"/>
+            <apex:column value="{!opp.StageName}"/>
+            <apex:column value="{!opp.CloseDate}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

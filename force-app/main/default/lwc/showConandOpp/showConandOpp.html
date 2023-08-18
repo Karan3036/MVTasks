@@ -1,0 +1,25 @@
+<template>
+        <div style="height: auto;">
+        <template if:true={contactList}>
+            <lightning-card title="Contact Data">
+             <lightning-datatable
+                     key-field="id"
+                     data={contactList}
+                     columns={columns}>
+             </lightning-datatable>
+            </lightning-card>
+        </template>
+        </div>
+        <div style="height: auto;">
+            <template if:true={opportunityList}>
+                <lightning-card title="Opportunity Data">
+                 <lightning-datatable
+                         key-field="id"
+                         data={opportunityList}
+                         columns={columns1}>
+                 </lightning-datatable>
+                </lightning-card>
+            </template>
+            </div>
+
+</template>

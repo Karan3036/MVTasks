@@ -1,0 +1,21 @@
+<aura:component controller="palyingaura">
+    <aura:attribute name="createAcc" type="Account" default="{'sObjectType' : 'Account','Name' : '','Rating' : ''}"/>
+    <aura:attribute name="objName" type="String" default="Account"/>
+    <aura:attribute name="fldName" type="String" default="Rating"/>
+    <aura:attribute name="ratingList" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-p-around_small">
+        <lightning:input type="Text" label="Name" value="{!v.createAcc.Name}"/>
+        <lightning:input type="Text" label="Account Number" value="{!v.createAcc.AccountNumber}"/>
+        <lightning:input type="Email" name="email2" value="{!v.createAcc.Email}" label="Email ID"/>
+        <lightning:input type="Phone" label="Phone Number" value="{!v.createAcc.Phone}"/>
+        <lightning:select label="Rating" value="{!v.createAcc.Rating}">
+            <option value="">—None—</option>
+            <aura:iteration items="{!v.ratingList}" var="ac">
+                <option value="{!ac}">{!ac}</option>
+            </aura:iteration>
+        </lightning:select>
+        <lightning:button label="Save" iconPosition="left" variant="brand" onclick="{!c.doSave}"/>
+        <lightning:button label="Cancel" iconPosition="right" variant="destructive" onclick="{!c.docancel}"/>
+    </div>
+</aura:component>

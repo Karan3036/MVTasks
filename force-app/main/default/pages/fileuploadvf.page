@@ -1,0 +1,17 @@
+<apex:page standardController="Contact">
+  <apex:includeLightning />
+    <div id="compContainer" />
+    <script>
+    $Lightning.use('c:fileuploadapp', function() {
+    $Lightning.createComponent(
+        'c:fileupload',
+        {
+            recordId: "{!$CurrentPage.parameters.id}"
+        },
+        'compContainer',
+        function(cmp) {
+            console.log('component created {!$CurrentPage.parameters.id}');
+    });
+});
+  </script>
+</apex:page>

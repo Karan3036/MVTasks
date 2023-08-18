@@ -1,0 +1,116 @@
+<template>
+    <lightning-progress-indicator current-step={currentStep} type="path" variant="base">
+        <lightning-progress-step label="Choose Object" value="1" onclick={handleOnStepClick}></lightning-progress-step>
+        <lightning-progress-step label="Select Record" value="2" onclick={handleOnStepClick}></lightning-progress-step>
+        <lightning-progress-step label="Send Mail" value="3" onclick={handleOnStepClick}></lightning-progress-step>
+    </lightning-progress-indicator>
+</br>
+<!-- --------------------------------------------------------------------------------------------------------- -->
+    <div style="background-color: aliceblue; border-radius: 20px;">
+        <template if:true={isStepOne}>
+
+            <div style="background-color: white; padding: 20px 20px 20px 20px;">
+                <lightning-combobox name="progress" label="Object" value={value} placeholder="Select Object"
+                    options={options} onchange={handleChange}></lightning-combobox>
+                <p>Selected value is: {value}</p>
+            </div>
+            
+        </template>
+<!-- --------------------------------------------------------------------------------------------------------- -->
+        <template if:true={isStepTwo}>
+            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;"></div>
+            
+             <!--RECORDS PER PAGE-->
+             <div class="slds-col">
+                <div class="slds-list_inline slds-p-bottom_xx-small">
+                    <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Page Size:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="recordsPerPage" onchange={handleRecordsPerPage}>
+                            <template for:each={pageSizeOptions} for:item="option">
+                                <option key={option} value={option}>{option}</option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- <br/> -->
+             <!--PAGE NAVIGATION-->
+             <div class="slds-align_absolute-center" style="height:5rem">
+                <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button>
+                <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>
+                &nbsp;
+                <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page(s)</span>
+                &nbsp;
+                <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
+                <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
+            </div>
+            <!-- <br/> -->
+            <!--TOTAL RECORDS-->
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <span class="slds-badge"> Total Records: {totalRecords}</span>
+                </div>
+            </div>
+       
+<!-- --------------------------------------------------------------------------------------------------------- -->        
+            <!-- id="accshow" -->
+            <template  if:true={acctrue}>
+
+                <lightning-datatable key-field="id" data={accountList} columns={acc} onrowaction={getid}>
+                </lightning-datatable>
+            </template>
+            <!-- id="conshow" -->
+            <template  if:true={contrue}>
+                <lightning-datatable key-field="id" data={contlist} columns={con} onrowaction={getid}>
+                </lightning-datatable>
+            </template>
+            <!-- id="leadshow" -->
+            <template  if:true={leadtrue}>
+                <lightning-datatable key-field="id" data={leadlist} columns={lea} onrowaction={getid}>
+                </lightning-datatable>
+            </template>
+        </template>
+<!-- --------------------------------------------------------------------------------------------------------- -->
+        <template if:true={isStepThree}>
+            <lightning-record-view-form record-id={recordId} object-api-name="Contact">
+                <div style="background-color: aliceblue;padding: 20px 20px 20px 20px;">
+                    <label style="border: 1px solid black; border-radius: 0%; background-color: gray;">Send To :{email}</label>
+                    <lightning-combobox name="emailTemplate" label="Select an Email Template" options={emailTemplateOptions}
+                            value={selectedTemplate} onchange={handleTemplateChange}></lightning-combobox>
+                    <lightning-input type="text" name="Subject" label="Email Subject" value={emailsubject}
+                        onfocusout={getsubject}>
+                    </lightning-input>
+                    <lightning-textarea name="Body" label="Email Body" value={emailbody}
+                        onfocusout={getbody}></lightning-textarea>   
+                </div>
+                <br/>
+                </lightning-record-view-form>
+                <lightning-file-upload label="Attach Files" name="uploadFile" accept={acceptedFormats} record-id={recordId} onuploadfinished={handleUploadFinished} >
+                </lightning-file-upload></br>
+                <template if:true={uploadFile}>
+                    <template for:each={uploadFile} for:item="fileIterator" for:index="index">
+                        <lightning-pill class="FilesPill" key={fileIterator.contentVersionId} label={fileIterator.name} data-id={fileIterator.contentVersionId} data-index={index} onremove={fileRemove}></lightning-pill>
+                    </template>
+                    </template>                    
+                    <br/>
+        </template>
+<!-- --------------------------------------------------------------------------------------------------------- -->        
+        <div style="padding: 20px 20px 20px 20px;">
+        <template if:true={isEnablePrev} >
+            
+            <lightning-button variant="brand" label="Previous" onclick={handlePrev} style="padding-right: 50px;"></lightning-button>
+        
+        </template>
+        <template if:true={isEnableNext}>
+            
+            <lightning-button label="Next" variant="brand" onclick={handleNext}></lightning-button>
+        
+        </template>
+        <template if:true={isStepThree}>
+            
+            <lightning-button label="Send Email" variant="brand" onclick={handleFinish} style="padding-right: 50px;"></lightning-button>
+        
+        </template>
+    </div>
+    </div>
+</template>

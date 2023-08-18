@@ -1,0 +1,60 @@
+<template>
+    <lightning-progress-indicator current-step={currentStep} type="path" variant="base">
+        <lightning-progress-step label="Step 1" value="1" onclick={handleOnStepClick}></lightning-progress-step>
+        <lightning-progress-step label="Step 2" value="2" onclick={handleOnStepClick}></lightning-progress-step>
+        <lightning-progress-step label="Step 3" value="3" onclick={handleOnStepClick}></lightning-progress-step>
+    </lightning-progress-indicator>
+
+    <div style="background-color: aliceblue;">
+        <template if:true={isStepOne}>
+
+            <div style="background-color: white;">
+                <lightning-combobox name="progress" label="Status" value={value} placeholder="Select Progress"
+                    options={options} onchange={handleChange}></lightning-combobox>
+                <p>Selected value is: {value}</p>
+            </div>
+            <template id="accshow" if:true={acctrue}>
+
+                <lightning-datatable key-field="id" data={accountList} columns={acc} onrowaction={getid}>
+                </lightning-datatable>
+            </template>
+            <template id="conshow" if:true={contrue}>
+                <lightning-datatable key-field="id" data={contlist} columns={con} onrowaction={getid}>
+                </lightning-datatable>
+            </template>
+            <template id="leadshow" if:true={leadtrue}>
+                <lightning-datatable key-field="id" data={leadlist} columns={lea} onrowaction={getid}>
+                </lightning-datatable>
+            </template>
+        </template>
+
+        <template if:true={isStepTwo}>
+            <div>
+                <!-- <lightning-output-field>{email}</lightning-output-field> -->
+                <label style="border: 1px solid black; border-radius: 0%; background-color: gray;">{email}</label>
+                <lightning-input type="text" name="Subject" label="Email Subject" value={emailsubject}
+                    onfocusout={getsubject}>
+                </lightning-input>
+                <lightning-textarea name="Body" label="Email Body" value={emailbody}
+                    onfocusout={getbody}></lightning-textarea>
+            </div>
+        </template>
+        <template if:true={isStepThree}>
+            <div><br/>
+                <label>Send to:- {email}</label> <br />
+                <Label>Email Subject:- {emailsubject}</Label>
+                <br /><label>Email Body:- {emailbody}</label>
+            </div>
+        </template>
+
+        <template if:true={isEnablePrev}>
+            <lightning-button variant="brand" label="Previous" onclick={handlePrev}></lightning-button>
+        </template>
+        <template if:true={isEnableNext}>
+            <lightning-button label="Next" variant="brand" onclick={handleNext}></lightning-button>
+        </template>
+        <template if:true={isEnableFinish}>
+            <lightning-button label="Send Email" variant="brand" onclick={handleFinish}></lightning-button>
+        </template>
+    </div>
+</template>

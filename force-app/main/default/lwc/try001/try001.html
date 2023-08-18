@@ -1,0 +1,38 @@
+<template>
+    <lightning-card >
+        <div style="padding: 20px;
+        text-align: center;
+        background: #1abc9c;
+        color: white;
+        font-size: 30px; height:80px;">
+            <h1>Contact's Record Edit Page</h1>
+          </div>
+        <lightning-record-edit-form record-id={recordId} object-api-name="Contact" 
+        onsuccess={handleSuccess} onsubmit={validateFields} onerror={handleError} onchange={handleChange}>
+            <lightning-messages data-id="message">
+            </lightning-messages>
+                <div class="slds-grid slds-wrap">
+                    <template if:true={fields}>
+                        <template for:each={fields} for:item="f">
+                            
+                            <div key={f.Id} class="slds-col slds-size_1-of-2">
+    
+                            <div if:true={f.checkOpp}>
+                                <c-custom-lookup-field class="slds-col slds-size_1-of-2" field={fields} options={options} record-id={recordId} value={value} onprogressvaluechange={hanldeProgressValueChange}></c-custom-lookup-field>
+                            </div>
+                            <div if:false={f.checkOpp}>
+                                <lightning-input-field field-name={f.APIName} ></lightning-input-field>
+                            </div>
+                            
+                            
+                        </div>
+                    </template>
+                </template> 
+                </div>
+            
+            <div style="background-color:#1abc9c;padding-left: 45%;padding-top: 2%;padding-bottom: 2%;">
+                <button class="slds-button slds-button_inverse" type="submit"  onclick={saveClick} >Save</button>
+              </div>
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

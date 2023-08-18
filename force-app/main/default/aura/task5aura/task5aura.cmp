@@ -1,0 +1,20 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+     
+    <aura:attribute name="image_URl" type="String"/>
+    <aura:attribute name="Background_Color" type="String"/>
+    <aura:attribute name="Description" type="String"/>
+    <aura:attribute name="Font_size" type="String" default="50px"/>
+    <aura:attribute name="Font_Color" type="String"/>
+    <div style="{!'background:' + v.Background_Color}">
+        <lightning:layout>
+            <lightning:layoutItem>
+                <img src="{!v.image_URl}"/>  
+            </lightning:layoutItem>  
+        </lightning:layout>
+        <lightning:layout>
+        <lightning:layoutItem>
+        <h1 style="{!'font-size:' + v.Font_size + ';color:' + v.Font_Color + ';'}">{!v.Description}</h1>
+        </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

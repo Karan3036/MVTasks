@@ -1,0 +1,61 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="SendEmailController">
+        <aura:attribute name="to" type="String"/>
+        <aura:attribute name="cc" type="String"/>
+        <aura:attribute name="bcc" type="String"/>
+        <aura:attribute name="subject" type="String"/>
+        <aura:attribute name="body" type="String"/>
+        <aura:attribute name="from" type="OrgWideEmailAddress[]" />
+        <aura:attribute name="files" type="List"/>
+        <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+        
+        <div class="slds-container--medium">
+            <div class="slds-form">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:select name="select" label="From:" aura:id="fromId">
+                            <option value="">--None--</option>
+                            <aura:iteration items="{!v.from}" var="frmAdd">
+                                <option text="{!frmAdd.DisplayName}" value="{!frmAdd.Address}"></option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:input type="email" aura:id="isValid" label="To:" value="{!v.to}" name="toAddress" required="true" messageWhenRangeUnderflow="Please provide valid email"/>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:input type="email" aura:id="isValid" label="CC:" value="{!v.cc}" name="cc" messageWhenRangeUnderflow="Please provide valid email"/>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:input type="email" aura:id="isValid" label="BCC:" value="{!v.bcc}" name="bcc" messageWhenRangeUnderflow="Please provide valid email"/>
+                    </div>  
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:input type="text" label="Subject:" name="subject" value="{!v.subject}"/>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label class="slds-form-element__label" >Body:</label>
+                        <lightning:inputRichText placeholder="Type email body" value="{!v.body}"/>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">    
+                         <lightning:fileUpload label="Upload File" multiple="true" accept=".pdf, .png, .txt" recordId="{!v.recordId}" aura:id="multifileUpload" onuploadfinished="{!c.uploadFile}" />
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">    
+                        <lightning:button class="slds-button slds-button--brand" onclick="{!c.sendEmail}">Send</lightning:button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</aura:component>

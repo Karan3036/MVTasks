@@ -1,0 +1,13 @@
+<apex:page controller="NewContactClass">
+     <apex:pageBlock >
+    <apex:form >
+        <apex:pageBlockSection title="Contact Detail Page">       
+            First Name <apex:inputText value="{!firstName}" />
+            Last Name <apex:inputText value="{!lastName}" />
+            Phone <apex:inputText value="{!phone}" />
+            Email <apex:inputText value="{!email}"/>
+            <apex:commandButton value="save" action="{!save}" />
+        </apex:pageBlockSection> 
+    </apex:form>  
+    </apex:pageBlock>    
+</apex:page>

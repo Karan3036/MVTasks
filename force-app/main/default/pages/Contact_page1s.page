@@ -1,0 +1,21 @@
+<apex:page standardController="Contact">
+<apex:form >
+<apex:pageBlock >
+<apex:pageBlockSection title="Contact information">
+    <apex:inputField value="{!Contact.salutation}"/>
+    <apex:inputField value="{!Contact.Firstname}"/>
+    <apex:inputField value="{!Contact.Lastname}"/>
+    <apex:inputField value="{!Contact.Department}"/>
+    <apex:inputField value="{!Contact.birthdate}"/>
+    <apex:inputField value="{!Contact.leadsource}"/>
+    </apex:pageBlockSection>
+<apex:pageBlockSection title="Aditional information">
+    <apex:inputField value="{!Contact.Languages__c}"/>
+    <apex:inputField value="{!Contact.Level__c}"/>
+    </apex:pageBlockSection>  
+<apex:pageBlockButtons >
+    <apex:commandButton value="Save" action="{!save}"/>
+</apex:pageBlockButtons>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

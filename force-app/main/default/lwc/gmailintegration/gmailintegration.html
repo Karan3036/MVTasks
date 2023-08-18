@@ -1,0 +1,34 @@
+<template>
+    <lightning-record-view-form record-id={recordId} object-api-name="Contact">
+    <div style="background-color: aliceblue;">
+        <!-- <lightning-output-field field-name="Email" >{email}</lightning-output-field> -->
+        <label style="border: 1px solid black; border-radius: 0%; background-color: gray;">Send To :{email}</label>
+        <lightning-combobox name="Email Template" label="Select Email Template" value={selectedTemplate} options={emailTemplates} onchange={handleTemplateSelection}></lightning-combobox>
+        <lightning-input type="text" name="Subject" label="Email Subject" value={emailsubject}
+            onfocusout={getsubject}>
+        </lightning-input>
+        <lightning-textarea name="Body" label="Email Body" value={emailbody}
+            onfocusout={getbody}></lightning-textarea>   
+    </div>
+    <br/>
+    </lightning-record-view-form>
+    <lightning-file-upload label="Attach Files" name="uploadFile" accept={acceptedFormats} record-id={recordId} onuploadfinished={handleUploadFinished} >
+    </lightning-file-upload></br>
+    <template if:true={uploadFile}>
+        <template for:each={uploadFile} for:item="fileIterator" for:index="index">
+            <lightning-pill class="FilesPill" key={fileIterator.contentVersionId} label={fileIterator.name} data-id={fileIterator.contentVersionId} data-index={index} onremove={fileRemove}></lightning-pill>
+        </template>
+        </template>
+        <!-- <div style="margin-left:5%">
+            <div>
+                <lightning-input label="" name="file to uploder" onchange={handleSelectedFiles} 
+                    type="file" multiple></lightning-input>
+            </div><br/>            
+            <div class="slds-text-body_small">{fileName}
+            </div>
+            </div> -->
+    
+        
+        <br/>
+        <lightning-button label="Send Email" variant="brand" onclick={handleFinish}></lightning-button>
+</template>

@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Record with Field Integrity" icon-name="standard:Contact">
+            <div class="slds-p-around_x-small">
+                <lightning-input label="Last Name" value={rec.LastName} onchange={handleNameChange}></lightning-input>
+                <lightning-input label="First Name" value={rec.FirstName} onchange={handleIndChange}></lightning-input>
+                <lightning-input type="date" label="BirthDate" value={rec.Birthdate} onchange={handlePhnChange}></lightning-input>
+                <lightning-input label="Age" value={Ages__c} onchange={handlePhnChange}></lightning-input>
+                <lightning-input type="email" label="Email" name="email" value={rec.Email_Ids__c} multiple="true" onchange={handleemiChange}></lightning-input>
+                <lightning-input label="Username" value={rec.User__c} onchange={handleusernameChange}></lightning-input><br/>
+                <c-save-button record={rec}></c-save-button>
+            </div>
+        </lightning-card>
+</template>

@@ -1,0 +1,17 @@
+<apex:page controller="Registrationpageclass" >
+  <apex:pageBlock >
+    <apex:form id="yourformid">
+        <apex:pageBlockSection title="Registration Page">       
+            Name <apex:inputText value="{!name}" />
+            Email <apex:inputText value="{!email}"/>
+            Password <apex:inputText value="{!password}" />
+            <apex:commandButton value="save" action="{!save}" onComplete="checkurl();"/>
+        </apex:pageBlockSection> 
+    </apex:form>  
+      <script>
+      function checkurl(){
+      window.location = "https://mvclouds36-dev-ed--c.develop.vf.force.com/apex/loginpage?core.apexpages.request.devconsole=1";
+      }
+      </script>
+    </apex:pageBlock>  
+</apex:page>

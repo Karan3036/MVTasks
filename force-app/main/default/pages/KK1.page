@@ -1,0 +1,8 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <marquee>Congratulations</marquee>
+  <h1>This is your new Page</h1>
+  
+  
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

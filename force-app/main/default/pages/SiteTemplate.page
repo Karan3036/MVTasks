@@ -1,0 +1,22 @@
+<apex:page showHeader="false" id="SiteTemplate">
+  <apex:stylesheet value="{!URLFOR($Resource.SiteSamples, 'SiteStyles.css')}"/>
+  
+  <apex:insert name="header">
+    <c:SiteHeader />
+    <hr/>
+  </apex:insert>
+  <apex:insert name="body"/>
+  <marquee
+  direction="down"
+  width="250"
+  height="200"
+  behavior="alternate"
+  style="border:solid">
+  <marquee behavior="alternate"> <h1>Welcome</h1> </marquee>
+</marquee>
+  <apex:insert name="footer">
+    <hr/>
+    <c:SiteFooter />
+    <site:googleAnalyticsTracking />
+  </apex:insert>
+</apex:page>

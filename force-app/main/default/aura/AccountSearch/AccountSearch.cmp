@@ -1,0 +1,53 @@
+<aura:component controller="AccountsController">
+    <aura:attribute name="accounts" type="List" />
+    <aura:attribute name="accounts_2" type="List" />
+    <aura:attribute name="key" type="String" /> 
+    <aura:attribute name="accid" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:card>
+        <lightning:layout>
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="slds-box">
+                    <h1>Section:- 1 </h1><br/>
+                    <div class="slds-box">
+                        <h1>searching :-<lightning:input type="text" name="searchKey" label="Enter Account Name" aura:id="searchKey" onchange="{!c.searchKeyChange}" placeholder="Search" /> </h1>
+                    </div>
+                    <br/>
+                    <aura:iteration items="{!v.accounts}" var="account">
+                        <div class="slds-box" ondragover="{!c.allDrop}" ondrop="{!c.onNewDrop}" id="{!account.Id}">
+                            <h1>Acc Name :- {!account.Name}</h1><br/>
+                            <aura:iteration items="{!account.Contacts}" var="con1" >
+                            <div class="slds-box" ondragstart="{!c.dragstart}" draggable="true" id="{!con1.Id}">
+                                <h1>Con Name :- {!con1.Name}</h1>
+                                <h1>Phone :- {!con1.phone}</h1>
+                                <h1>Email :- {!con1.Email}</h1>
+                            </div>
+                        </aura:iteration>
+                        </div>
+                    </aura:iteration>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="slds-box">
+                    <h1>Section:- 2 </h1><br/>
+                    <div class="slds-box">
+                        <h1>searching :-<lightning:input type="text" name="searchKey_2" label="Enter Account Name" aura:id="searchKey_2" onchange="{!c.searchKeyChange_2}" placeholder="Search" /> </h1>
+                    </div>
+                    <br/>
+                    <aura:iteration items="{!v.accounts_2}" var="account">
+                        <div class="slds-box" ondragover="{!c.allDrop}" ondrop="{!c.onNewDrop}" id="{!account.Id}">
+                            <h1>Acc Name :- {!account.Name}</h1><br/>
+                            <aura:iteration items="{!account.Contacts}" var="con1" >
+                            <div class="slds-box" ondragstart="{!c.dragstart}" draggable="true" id="{!con1.Id}">
+                                <h1>Con Name :- {!con1.Name}</h1>
+                                <h1>Phone :- {!con1.phone}</h1>
+                                <h1>Email :- {!con1.Email}</h1>
+                            </div>
+                        </aura:iteration>
+                        </div>
+                    </aura:iteration>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+</aura:component>

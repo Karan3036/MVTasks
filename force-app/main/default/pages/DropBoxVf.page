@@ -1,0 +1,160 @@
+<apex:page showHeader="true" standardStylesheets="false" sidebar="true"  applyBodyTag="false" docType="html-5.0" controller="dbct">
+   <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+      <head>
+         <meta charset="utf-8" />
+         <meta http-equiv="x-ua-compatible" content="ie=edge" />
+         <title>DropBox Salesforce Integration</title>
+         <meta name="viewport" content="width=device-width, initial-scale=1"/>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <!-- Import the Design System style sheet -->
+         <apex:slds />
+      </head>
+      <body>
+         <!-- REQUIRED SLDS WRAPPER -->
+         <div class="slds-scope">
+            <!-- PRIMARY CONTENT WRAPPER -->
+            <!-- RESPONSIVE GRID EXAMPLE -->
+            <div class="myapp">
+               <!-- header part -->
+               <div class="slds-tabs_card">
+                  <div class="slds-page-header">
+                     <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                           <div class="slds-media">
+                              <div class="slds-media__figure">
+                                 <span class="slds-icon_container slds-icon-standard-opportunity" >
+                                    <svg aria-hidden="true" class="slds-icon ">
+                                       <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/apexpages/slds/latest/assets/icons/standard-sprite/svg/symbols.svg#opportunity">
+                                       </use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Techdicer</span>
+                                 </span>
+                              </div>
+                              <div class="slds-media__body">
+                                 <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                       <h1>
+                                          <span>DropBox API Call From Apex</span>
+                                          <span class="slds-page-header__title slds-truncate" title="Recently Viewed">TechDicer</span>
+                                       </h1>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <br/>
+               <!-- /header part -->
+                   
+               <apex:form id="myForm">
+                   <!-- SPINNER -->
+                    <div id="spinner" class="slds-spinner_container slds-is-absolute slds-hide" >
+                        <div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                  <!-- / SPINNER -->
+                    
+                  <div class="slds-grid slds-wrap">
+                     <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1" style="text-align: center;">
+                        <!-- card -->
+                        <article class="slds-card">
+                           <div class="slds-card__header slds-grid">
+                              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                 <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon-standard-account" title="account">
+                                       <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                          <use xlink:href="/apexpages/slds/latest/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                                       </svg>
+                                       <span class="slds-assistive-text">account</span>
+                                    </span>
+                                 </div>
+                                 <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                       <a href="#" class="slds-card__header-link slds-truncate" title="Accounts">
+                                       <span>Accounts</span>
+                                       </a>
+                                    </h2>
+                                 </div>
+                                 <div class="slds-no-flex">
+                                    <apex:commandButton id="login" action="{!getAuthorizationCode}" value="Dropbox login" rendered="{!!connected}" styleClass="slds-button slds-button_brand"/>
+                                    <apex:commandButton action="{!createFolder}" value="Create Folder" styleClass="slds-button slds-button_brand slds-m-right_small" rendered="{!connected}"/>
+                                    <apex:commandButton action="{!deleteFolderOrFile}" value="Delete Folder/Files" styleClass="slds-button slds-button_brand" rendered="{!connected}"/>
+                                 </div>
+                              </header>
+                           </div>
+                           <div class="slds-card__body slds-card__body_inner">
+                              <!-- Error Toast -->
+                              <apex:outputPanel rendered="{!isError}">
+                                  <div class="slds-notify_container slds-is-relative">
+                                   <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+                                      <span class="slds-assistive-text">error</span>
+                                      <span class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                                         <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                                         </svg>
+                                      </span>
+                                      <div class="slds-notify__content">
+                                         <h2 class="slds-text-heading_small">
+                                             <apex:outputText value="{!errorMessage}"></apex:outputText>
+                                         </h2>
+                                      </div>
+                                   </div>
+                                </div>
+                              </apex:outputPanel>
+                              <!--/Error Toast -->   
+                              <!-- user success login -->
+                              <apex:outputPanel rendered="{!isSuccess}">
+                                 <div class="slds-notify_container slds-is-relative">
+                                    <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+                                       <span class="slds-assistive-text">success</span>
+                                       <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                                          <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                             <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#success"></use>
+                                          </svg>
+                                       </span>
+                                       <div class="slds-notify__content">
+                                          <h2 class="slds-text-heading_small ">
+                                             {!successMessage}
+                                          </h2>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <br/><br/>
+                                 <!-- create/delete folder and upload files -->
+                                 <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1">
+                                       <apex:inputFile id="file" value="{!fileBody}" filename="{!fileName}"></apex:inputFile>
+                                       <apex:commandButton action="{!uploadFiles}" value="Upload" styleClass="slds-button slds-button_brand"/>
+                                    </div>
+                                 </div>
+                                 <!-- /createdelete folder and upload files -->
+                              </apex:outputPanel>
+                              <!-- /user success login -->
+                           </div>
+                           <footer class="slds-card__footer">
+                           </footer>
+                        </article>
+                        <!--/card -->
+                     </div>
+                  </div>
+               </apex:form>
+            </div>
+            <!-- / RESPONSIVE GRID EXAMPLE -->
+         </div>
+      </body>
+      <script>
+          function showSpinner(){
+              $("#spinner").addClass('slds-show').removeClass('slds-hide');
+          }
+           
+          function hideSpinner(){
+              $("#spinner").addClass('slds-hide').removeClass('slds-show');
+          }
+      </script>
+   </html>
+</apex:page>

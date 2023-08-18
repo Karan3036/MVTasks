@@ -1,0 +1,11 @@
+<template>
+    <lightning-card>
+    <lightning-combobox
+      name="emailTemplate"
+      label="Select an Email Template"
+      options={emailTemplateOptions}
+      value={selectedTemplate}
+      onchange={handleTemplateChange}
+    ></lightning-combobox>
+    </lightning-card>
+  </template>

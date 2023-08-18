@@ -1,0 +1,21 @@
+<apex:page controller="newcontactregisclass" >
+  <apex:pageBlock >
+    <apex:form >
+        <apex:pageBlockSection title="Registration Page">
+            FirstName <apex:inputText value="{!firstname}" />
+            LastName <apex:inputText value="{!lastname}" />
+            Email <apex:inputText value="{!email}"/>
+            Password <apex:inputText value="{!password}" />
+            Account Name <apex:selectList value="{!selectedaccId}" size="1" multiselect="false" required="true"  >
+                        <apex:selectOptions value="{!ListOfAccount}"  />
+                    </apex:selectList>
+            <apex:commandButton value="save" action="{!save}" onComplete="checkurl();"/>
+        </apex:pageBlockSection> 
+    </apex:form>  
+      <script>
+      function checkurl(){
+      window.location = "https://mvclouds36-dev-ed--c.develop.vf.force.com/apex/loginpage?core.apexpages.request.devconsole=1";
+      }
+      </script>
+    </apex:pageBlock>  
+</apex:page>

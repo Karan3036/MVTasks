@@ -1,0 +1,34 @@
+<apex:page >
+    <style>
+        .footer {
+            height: 100px;
+            background: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .error-content {
+            margin: 24px auto;
+            font-size: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo {
+            height: 500px;
+            background: black;
+            
+        }
+    </style>
+     
+    <div class="logo">
+        <apex:image url="{!URLFOR($Resource.ErrorPage)}" width="100%" height="400"/>
+    </div>
+     
+    <div class="error-content">
+        Page not found. 
+    </div>
+ 
+     
+</apex:page>

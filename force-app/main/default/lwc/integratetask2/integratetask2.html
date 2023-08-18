@@ -1,0 +1,56 @@
+<template>
+    <article class="slds-tile">
+    <!-- file upload section -->
+    <lightning-card variant="Narrow" title="Lightning Web Component File Uploader for Dropbox" 
+            style="width:30rem"    icon-name="custom:custom14"> 
+        <div style="margin-left:5%">
+            <div>
+                <lightning-file-upload label="Attach Files" name="uploadFile" accept={acceptedFormats} record-id={recordId} onuploadfinished={handleUploadFinished} multiple>
+                </lightning-file-upload></br>
+                <template if:true={uploadFile}>
+                    <template for:each={uploadFile} for:item="fileIterator" for:index="index">
+                        <lightning-pill class="FilesPill" key={fileIterator.contentVersionId} label={fileIterator.name} data-id={fileIterator.contentVersionId} data-index={index} onremove={fileRemove}></lightning-pill>
+                    </template>
+                    </template>
+            </div><br/>            
+            <div class="slds-text-body_small">{fileName}
+            <template if:true={showSpinner}>
+                <lightning-spinner alternative-text="Uploading the file......" size="medium">                        
+                    </lightning-spinner>
+            </template>
+            </div><br/>
+            <div>
+                <lightning-button class="slds-m-top--medium" label="Store File to Dropbox" onclick={handleFinish} 
+                    variant="brand">
+                </lightning-button>
+            </div>
+        </div><br/><br/>
+        <lightning-input label="Write File Name to Delete">
+        </lightning-input>
+        <br/>
+        <lightning-button label="Delete File" onclick={deletefile} variant="brand">
+        </lightning-button>
+        <br/>
+        <br/>
+        
+        <lightning-button label="Get Files" onclick={getfiless} variant="brand"></lightning-button>
+        <br/>
+        <template if:true={tableData}>
+            <template iterator:acc={tableData}>
+            <lightning-card title="Following files are available:" key={acc.File_Id}>
+                <!-- <template if:true={conversionData}>     -->
+                    <div class="slds-p-around_medium" id="modal-content-id-1">
+                            <dl class="slds-list_horizontal slds-wrap">
+                                <!-- <dt class="slds-item_label slds-truncate" title="From Currency Name">File Id</dt>
+                                <dd class="slds-item_detail slds-truncate"><b>: {tableData.File_Id}</b></dd> -->
+                                <dt class="slds-item_label slds-truncate" title="From Currency Code">File Name</dt>
+                                <dd class="slds-item_detail slds-truncate"><b>: {acc.File_Name}</b></dd>
+                            </dl>
+                    </div>
+                <!-- </template> -->
+            </lightning-card>
+            </template>
+        </template>
+    </lightning-card>
+    </article>
+</template>
